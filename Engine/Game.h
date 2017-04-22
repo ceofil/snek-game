@@ -23,6 +23,15 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
+#include <cmath>
+#include <random>
+#include "Board.h"
+#include "Snek.h"
+#include "Goal.h"
+#include <iostream>
+#include "Text.h"
+
+
 
 class Game
 {
@@ -34,22 +43,64 @@ public:
 private:
 	void ComposeFrame();
 	void UpdateModel();
+	
 	/********************************/
 	/*  User Functions              */
+	void drawthinwallz();
+
+	void spawnGoal();
+	int nrcifre(int n);
+	
 	/********************************/
 private:
 	MainWindow& wnd;
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	int x = 300, y = 300, speed = 3;
-	int r = 255, g = 255, b = 255;
-	int sqlen = 10;						//sqare lenght
-	int vx = 0, vy = 0;
-	bool inhibRight = false;
-	bool inhibLeft = false;
-	bool inhibUp = false;
-	bool inhibDown = false;
+	
 
+	std::random_device rd;
+	std::mt19937 rng;
+	std::uniform_int_distribution<int> xrange;
+	std::uniform_int_distribution<int> yrange;
+	std::uniform_int_distribution<int> vrange;
+	std::uniform_int_distribution<int> xgoal;
+	std::uniform_int_distribution<int> ygoal;
+
+	Board brd;
+	Text nr;
+	Text text;
+	Text gameoverscreen;
+	Location start = { 3,3 };
+	Snek snek;
+	Goal goal;
+	int x;
+	int xsc = -2;
+	int test = 0;
+	int kframe = 0;
+	int fps = 3;
+	int maxkframes = 60 / fps;
+	static constexpr int sw = Graphics::ScreenWidth;
+	static constexpr int sh = Graphics::ScreenHeight;
+	static constexpr int cellsize = 20;
+	static constexpr int xnrcells = sw / cellsize - 1;   //fullscreen
+	static constexpr int ynrcells = sh / cellsize - 1;	 //fullscreen
+	static constexpr int xboard = (sw - xnrcells* cellsize) / 2;
+	static constexpr int yboard = (sh - ynrcells* cellsize) / 2;
+	static constexpr int xwall = cellsize + xboard;
+	static constexpr int ywall = cellsize + yboard;
+	Color wall = Colors::Blue;
+	Color bg = { 0,0,0 };
+	int wallthick = cellsize / 2;
+	bool gameover = false;
+	int startlen = 5;
+	int maxscore = 0;
+	Location up = { 0,-1 };
+	Location down = { 0,1 };
+	Location right = { 1,0 };
+	Location left = { -1,0 };
+	Location lastmove;
 	/********************************/
 };
+
+
