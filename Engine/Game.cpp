@@ -188,6 +188,6 @@ int Game::nrcifre(int n)
 			n = n / 10;
 			k++;
 		}
-		return k;
+		return k;//
 	}
 }
