@@ -31,6 +31,7 @@
 #include <iostream>
 #include "Text.h"
 #include "FrameTimer.h"
+#include <chrono>
 
 
 
@@ -78,9 +79,8 @@ private:
 
 	int xsc = -2;
 	int test = 0;
-	int kframe = 0;
-	int fps = 3;
-	int maxkframes = 60 / fps;
+	float kframe = 0.0f;
+	float fps = 3.0f;
 	static constexpr int sw = Graphics::ScreenWidth;
 	static constexpr int sh = Graphics::ScreenHeight;
 	static constexpr int cellsize = 20;
@@ -101,6 +101,12 @@ private:
 	Location right = { 1,0 };
 	Location left = { -1,0 };
 	Location lastmove;
+
+	float speed;
+	float tfloat;
+	std::chrono::steady_clock::time_point last;
+	std::chrono::steady_clock::time_point old;
+	std::chrono::duration<float> t;
 	/********************************/
 };
 

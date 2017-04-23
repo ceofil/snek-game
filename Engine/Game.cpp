@@ -81,9 +81,15 @@ void Game::UpdateModel()
 
 	if (!gameover) {
 		if (snek.getnseg()>startlen) {
-			kframe++;
-			fps = sqrt(snek.getnseg()) + 3;
-			if (kframe >= 60 / fps) {
+
+			speed = 3.0f + sqrt(float(snek.getnseg()));
+			last = std::chrono::steady_clock::now();
+			t = last - old;
+			tfloat = t.count();
+			if (tfloat >= 1.0f / speed) {
+				old = std::chrono::steady_clock::now();
+
+
 				if (goal.isEaten(snek)) {
 					snek.grow();
 					spawnGoal();
@@ -111,6 +117,7 @@ void Game::UpdateModel()
 			for (int i = 1; i <= startlen; i++) {
 				snek.grow();
 				snek.update();
+				old = std::chrono::steady_clock::now();
 			}
 		}
 
@@ -147,7 +154,7 @@ void Game::ComposeFrame()
 		text.drawstring("length", 0, 5, Colors::White);
 		nr.drawint(snek.getnseg(), 20, 0, Colors::White);
 		text.drawstring("speed", 7, 28, Colors::White);
-		nr.drawint(fps, 20, 12, Colors::White);
+		nr.drawint(int(speed), 20, 12, Colors::White);
 
 		if (maxscore > 0) {
 
