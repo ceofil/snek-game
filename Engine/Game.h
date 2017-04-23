@@ -30,6 +30,7 @@
 #include "Goal.h"
 #include <iostream>
 #include "Text.h"
+#include "FrameTimer.h"
 
 
 
@@ -57,7 +58,7 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	
+	FrameTimer ft;
 
 	std::random_device rd;
 	std::mt19937 rng;

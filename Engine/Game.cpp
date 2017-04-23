@@ -51,6 +51,8 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	const float dt = ft.Mark();
+
 	if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
 		if (lastmove.equal( right ) == false) {
 			snek.delta = left;
