@@ -52,7 +52,7 @@ public:
 private:
 	static constexpr Color chead = { 0, 135, 0 };
 	int nseg = 1;
-	static constexpr int nsegmax = 200;
+	static constexpr int nsegmax = 500;
 	Segment segmentz[nsegmax];
 	Color v[nsegmax];
 };
