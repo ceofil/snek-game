@@ -316,6 +316,65 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
+void Graphics::DrawRect(int x, int y, int w, int h, Color c)
+{
+	w = w / 2;
+	h = h / 2;
+	for (int i = x - w; i <= x + w; i++) {
+		for (int j = y - h; j <= y + h; j++) {
+			if (insideScreen(i,j)) {
+				PutPixel(i, j, c);
+			}
+		}
+	}
+}
+void Graphics::DrawRectPoints(int x1,int y1,int x2, int y2, Color c)
+{
+	if (x1 > x2) {
+		std::swap(x1, x2);
+	}
+	if (y1 > y2) {
+		std::swap(y1, y2);
+	}
+	DrawRect((x2 + x1) / 2, (y2 + y1) / 2, x2 - x1, y2 - y1, c);
+}
+
+bool Graphics::insideScreen(int x, int y)
+{
+	return
+		x > 0 &&
+		y > 0 &&
+		x < ScreenWidth &&
+		y < ScreenHeight
+	;
+}
+
+int Graphics::seglen(int x1, int y1, int x2, int y2)
+{
+	return
+		(
+			sqrt(
+				(x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1)
+			)
+		);
+}
+
+void Graphics::DrawCircle(int x, int y, int r, Color c)
+{
+	for (int i = x - r; i <= x + r; i++) {
+		for (int j = y - r; j <= y + r; j++) {
+			if (insideScreen(i, j)) {
+				if (seglen(i, j, x, y) <= r) {
+					PutPixel(i, j, c);
+				}
+			}
+		}
+	}
+}
+
+
+
+
 
 //////////////////////////////////////////////////
 //           Graphics Exception
